@@ -1,0 +1,109 @@
+package Exception1;
+import java.io.*;
+import java.sql.*;
+public class ExceptionHandlingExamples {
+
+    public static void main(String[] args) {
+        
+        handleIOException();
+        handleFileNotFoundException();
+        handleEOFException();
+        handleSQLException();
+        handleClassNotFoundException();
+        handleArithmeticException();
+        handleNullPointerException();
+        handleArrayIndexOutOfBoundsException();
+        handleClassCastException();
+        handleIllegalArgumentException();
+        handleNumberFormatException();
+    }
+    private static void handleIOException() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("nonexistent.txt"));
+            reader.readLine();
+        } catch (IOException e) {
+            System.out.println("IOException caught: " + e.getMessage());
+        }
+    }
+    private static void handleFileNotFoundException() {
+        try {
+            FileInputStream fis = new FileInputStream("nonexistent.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("FileNotFoundException caught: " + e.getMessage());
+        }
+    }
+    private static void handleEOFException() {
+        try {
+            ByteArrayInputStream bais = new ByteArrayInputStream(new byte[] {});
+            DataInputStream dis = new DataInputStream(bais);
+            dis.readUTF(); 
+        } catch (EOFException e) {
+            System.out.println("EOFException caught: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IOException caught: " + e.getMessage());
+        }
+    }
+    private static void handleSQLException() {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:invalid:url", "user", "password");
+        } catch (SQLException e) {
+            System.out.println("SQLException caught: " + e.getMessage());
+        }
+    }
+    private static void handleClassNotFoundException() {
+        try {
+            Class.forName("nonexistent.Class");
+        } catch (ClassNotFoundException e) {
+            System.out.println("ClassNotFoundException caught: " + e.getMessage());
+        }
+    }
+    private static void handleArithmeticException() {
+        try {
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException caught: " + e.getMessage());
+        }
+    }
+    private static void handleNullPointerException() {
+        try {
+            String str = null;
+            str.length();
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException caught: " + e.getMessage());
+        }
+    }
+    private static void handleArrayIndexOutOfBoundsException() {
+        try {
+            int[] arr = {1, 2, 3};
+            int value = arr[10];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException caught: " + e.getMessage());
+        }
+    }
+    private static void handleClassCastException() {
+        try {
+            Object obj = new Integer(42);
+            String str = (String) obj;
+        } catch (ClassCastException e) {
+            System.out.println("ClassCastException caught: " + e.getMessage());
+        }
+    }
+    private static void handleIllegalArgumentException() {
+        try {
+            Thread thread = new Thread(() -> {});
+            thread.setPriority(100); 
+        } catch (IllegalArgumentException e) {
+            System.out.println("IllegalArgumentException caught: " + e.getMessage());
+        }
+    }
+    private static void handleNumberFormatException() {
+        try {
+            int num = Integer.parseInt("invalid");
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException caught: " + e.getMessage());
+        }
+    }
+}
+
+
+
